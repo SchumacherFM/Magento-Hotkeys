@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+ * @category    SchumacherFM
+ * @package     SchumacherFM_Hotkeys
+ * @copyright   Copyright (c) Cyrill at Schumacher dot fm / @SchumacherFM
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+-->
+<config>
+    <modules>
+        <SchumacherFM_Hotkeys>
+            <version>1.0.0</version>
+        </SchumacherFM_Hotkeys>
+    </modules>
+
+    <global>
+        <models>
+            <hotkeys>
+                <class>SchumacherFM_Hotkeys_Model</class>
+            </hotkeys>
+        </models>
+        <blocks>
+            <hotkeys>
+                <class>SchumacherFM_Hotkeys_Block</class>
+            </hotkeys>
+        </blocks>
+        <helpers>
+            <hotkeys>
+                <class>SchumacherFM_Hotkeys_Helper</class>
+            </hotkeys>
+        </helpers>
+    </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <SchumacherFM_Hotkeys>
+                    <files>
+                        <default>SchumacherFM_Hotkeys.csv</default>
+                    </files>
+                </SchumacherFM_Hotkeys>
+            </modules>
+        </translate>
+        <events>
+            <!--<adminhtml_widget_container_html_before>-->
+                <!--<observers>-->
+                    <!--<schumacherfm_hotkeys_add_load_gallery>-->
+                        <!--<class>SchumacherFM_Hotkeys_Model_Observer_AdminHtmlWidget</class>-->
+                        <!--<method>insertLoadGalleryButton</method>-->
+                    <!--</schumacherfm_hotkeys_add_load_gallery>-->
+                <!--</observers>-->
+            <!--</adminhtml_widget_container_html_before>-->
+        </events>
+    </adminhtml>
+    <default>
+        <hotkeys>
+            <hotkeys>
+                <enable>1</enable>
+            </hotkeys>
+        </hotkeys>
+    </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <SchumacherFM_Hotkeys/>
+            </modules>
+        </suite>
+    </phpunit>
+</config>

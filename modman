@@ -1,0 +1,5 @@
+src/app/code/community/SchumacherFM/Hotkeys app/code/community/SchumacherFM/Hotkeys
+src/app/etc/modules/SchumacherFM_Hotkeys.xml app/etc/modules/SchumacherFM_Hotkeys.xml
+src/app/locale/en_US/SchumacherFM_Hotkeys.csv app/locale/en_US/SchumacherFM_Hotkeys.csv
+src/app/locale/de_DE/SchumacherFM_Hotkeys.csv app/locale/de_DE/SchumacherFM_Hotkeys.csv
+src/js/hotkeys js/hotkeys

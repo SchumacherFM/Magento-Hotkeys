@@ -1,0 +1,16 @@
+{
+    "name": "schumacherfm/hotkeys",
+    "type": "magento-module",
+    "license": "OSL-3",
+    "homepage": "https://github.com/SchumacherFM/Magento-Hotkeys",
+    "description": "Providing Hotkeys for the Magento Backend",
+    "authors": [
+        {
+            "name": "Cyrill Schumacher",
+            "email": "cyrill@schumacher.fm"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
