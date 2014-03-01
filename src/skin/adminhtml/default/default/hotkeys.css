@@ -1,0 +1,5 @@
+/* default style */
+span.uline {
+    text-decoration : underline;
+    display         : inline-block !important;
+}

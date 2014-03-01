@@ -18,11 +18,11 @@
             <action method="addJs">
                 <script>hotkeys/adminhtml/hkMainMenu.js</script>
             </action>
-            <!--<action method="addItem">-->
-            <!--<type>skin_css</type>-->
-            <!--<name>hotkeys.css</name>-->
-            <!--<params/>-->
-            <!--</action>-->
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>hotkeys.css</name>
+                <params/>
+            </action>
         </reference>
 
         <reference name="js">

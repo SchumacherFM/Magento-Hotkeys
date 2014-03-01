@@ -3,3 +3,5 @@ src/app/etc/modules/SchumacherFM_Hotkeys.xml app/etc/modules/SchumacherFM_Hotkey
 src/app/locale/en_US/SchumacherFM_Hotkeys.csv app/locale/en_US/SchumacherFM_Hotkeys.csv
 src/app/locale/de_DE/SchumacherFM_Hotkeys.csv app/locale/de_DE/SchumacherFM_Hotkeys.csv
 src/js/hotkeys js/hotkeys
+src/app/design/adminhtml/default/default/layout/hotkeys.xml app/design/adminhtml/default/default/layout/hotkeys.xml
+src/skin/adminhtml/default/default/hotkeys.css skin/adminhtml/default/default/hotkeys.css
