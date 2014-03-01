@@ -10,7 +10,8 @@
     <default>
         <reference name="head">
             <action method="addJs">
-                <script>hotkeys/jwerty.js</script>
+                <script>hotkeys/keypress.js</script>
+                <!--<script>hotkeys/keypress-2.0.1.min.js</script>-->
             </action>
             <action method="addJs">
                 <script>hotkeys/hkPromise.js</script>

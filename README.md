@@ -63,7 +63,7 @@ Vinai [Composer installation](http://magebase.com/magento-tutorials/composer-wit
 About
 -----
 
-- Uses: [https://github.com/keithamus/jwerty](https://github.com/keithamus/jwerty)
+- Uses: [http://dmauro.github.io/Keypress/](http://dmauro.github.io/Keypress/)
 - Key: SchumacherFM_Hotkeys
 - Current Version: 1.0.0
 - [Download tarball](https://github.com/SchumacherFM/Magento-Hotkeys/tags)

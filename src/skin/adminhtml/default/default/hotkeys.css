@@ -1,5 +1,10 @@
 /* default style */
-span.uline {
+i.kpuline {
+    font-style      : normal;
     text-decoration : underline;
     display         : inline-block !important;
+}
+
+a.kpOrange {
+    background-color : darkorange !important;
 }
