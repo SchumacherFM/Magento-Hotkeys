@@ -22,7 +22,7 @@ Here. Take this template:
 
 ## On your own
 
-1. [Fork it](https://github.com/SchumacherFM/Magento-PicturePerfect/fork)
+1. [Fork it](https://github.com/SchumacherFM/Magento-Hotkeys/fork)
 2. Create your feature branch (`git checkout -b develop-feature develop`)
 3. Write a failing test
 4. Commit your changes with passing tests (`git commit -am 'Add some feature'`)

@@ -30,7 +30,26 @@
         </helpers>
     </global>
 
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <hotkeys before="Mage_Adminhtml">SchumacherFM_Hotkeys_Adminhtml</hotkeys>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
     <adminhtml>
+        <layout>
+            <updates>
+                <hotkeys>
+                    <file>hotkeys.xml</file>
+                </hotkeys>
+            </updates>
+        </layout>
         <translate>
             <modules>
                 <SchumacherFM_Hotkeys>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?><!--
+/**
+ * @category    SchumacherFM_Hotkeys
+ * @package     Helper
+ * @author      Cyrill at Schumacher dot fm / @SchumacherFM
+ * @copyright   Copyright (c) Please read the EULA
+ */
+-->
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addJs">
+                <script>hotkeys/jwerty.js</script>
+            </action>
+            <action method="addJs">
+                <script>hotkeys/hkPromise.js</script>
+            </action>
+            <action method="addJs">
+                <script>hotkeys/adminhtml/hkMainMenu.js</script>
+            </action>
+            <!--<action method="addItem">-->
+            <!--<type>skin_css</type>-->
+            <!--<name>hotkeys.css</name>-->
+            <!--<params/>-->
+            <!--</action>-->
+        </reference>
+
+        <reference name="js">
+            <block type="hotkeys/adminhtml_config" name="hotkeys_adminhtml_config"/>
+        </reference>
+
+    </default>
+</layout>
