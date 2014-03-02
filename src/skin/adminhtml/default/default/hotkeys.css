@@ -5,6 +5,15 @@ i.kpuline {
     display         : inline-block !important;
 }
 
-a.kpOrange {
-    background-color : darkorange !important;
+.kpLiBgColor {
+    background-color : forestgreen !important;
+}
+
+.kpLiBgColor > a > span {
+    text-decoration : underline;
+}
+
+.stop-scrolling {
+    height   : 100%;
+    overflow : hidden;
 }
