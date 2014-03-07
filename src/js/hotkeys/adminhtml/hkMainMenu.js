@@ -19,11 +19,11 @@
 //        self._previousActiveLiNode = null;
         self._activateMenuSC = 'meta m';
         self._isKeyPressedToActiveMenu = false;
-        self._cursorCurrentLeftRightUl = {}; // left right ul element
-        self._cursorCurrentUpDownUl = {}; // up and down ul element
+        self._cursorUlCurrent = {}; // left right ul element
+        self._cursorUlPrevious = {}; // up and down ul element
         self._cursorPosition = {};
         self._cursorLastPosition = {};
-        self._currentLevel = 0;
+        self._cursorObjectLevelCache = {};
         return self;
     }
 
@@ -36,9 +36,8 @@
             if (true === self._isKeyPressedToActiveMenu) {
                 self._isKeyPressedToActiveMenu = false;
                 self._cursorPosition = {};
-                self._cursorCurrentLeftRightUl = self._nav;
-                self._cursorCurrentUpDownUl = {};
-                self._currentLevel = 0;
+                self._cursorUlCurrent = {};
+                self._cursorUlPrevious = {};
                 self._startStopScrolling('start');
                 self._removeClassName(self._nav);
             }
@@ -66,9 +65,9 @@
 
             var self = this, firstLiNode = {};
             self._isKeyPressedToActiveMenu = true;
-            self._cursorCurrentLeftRightUl = self._nav;
+            self._cursorUlCurrent = self._nav;
 
-            self._makeUlConceivableForKeyboard(self._cursorCurrentLeftRightUl);
+            self._makeUlConceivableForKeyboard(self._cursorUlCurrent);
 
             firstLiNode = self._nav.firstDescendant();
             firstLiNode.addClassName('kpLiBgColor');
@@ -146,7 +145,7 @@
                             if (false === self._isKeyPressedToActiveMenu) {
                                 return false;
                             }
-                            return self._cursorLeftRight('left');
+                            return self._cursorLeftRight('left'); // idea: if level0 switch to up
                         },
                         'this': self
                     },
@@ -158,7 +157,7 @@
                             if (false === self._isKeyPressedToActiveMenu) {
                                 return false;
                             }
-                            return self._cursorLeftRight('right');
+                            return self._cursorLeftRight('right');  // idea: if level0 switch to down
                         },
                         'this': self
                     }
@@ -174,13 +173,10 @@
          * @private
          */
         _cursorUpDown: function (direction) {
-            if (!this._cursorCurrentUpDownUl.childElements) {
-                return false;
-            }
-            this._makeUlConceivableForKeyboard(this._cursorCurrentUpDownUl);
-
+            this._makeUlConceivableForKeyboard(this._cursorUlCurrent);
             var self = this,
-                liElements = self._cursorCurrentUpDownUl.childElements(),
+            //lastCursorPos = self._cursorLastPosition,
+                liElements = self._cursorUlCurrent.childElements(),
                 level = self._getLevelFromClassName(liElements[0]),
                 position = self._getCursorPosition(level, direction, liElements.length - 1),
                 isParent = self._childIsParent(liElements[position.cur]);
@@ -189,7 +185,7 @@
 
             if (true === isParent) {
                 liElements[position.cur].addClassName('over');
-                self._cursorCurrentLeftRightUl = liElements[position.cur].down('ul');
+                //self._cursorUlCurrent = liElements[position.cur].down('ul');
                 // @todo increase level counter
             }
 
@@ -211,35 +207,81 @@
          */
         _cursorLeftRight: function (direction) {
             var self = this,
-                liElements = self._cursorCurrentLeftRightUl.childElements(),
-                level = self._getLevelFromClassName(liElements[0]),
-                position = self._getCursorPosition(level, direction, liElements.length - 1),
-                isParent = self._childIsParent(liElements[position.cur]);
+                position = self._cursorLastPosition,
+                liElements = self._cursorUlCurrent.childElements(),
+            //level = self._getLevelFromClassName(liElements[position.cur]),
+            // position = self._getCursorPosition(level, direction, liElements.length - 1),
+                isParent = false;
 
-            // self._currentLevel = level;
+            if (undefined === liElements[position.cur]) {
+                console.log('empty liElements', position, liElements);
+                return true;
+            }
 
-            console.log('LeftRight ', position)
+            isParent = self._childIsParent(liElements[position.cur]);
 
-            if (true === isParent) {
-                liElements[position.cur].addClassName('over');
-                self._cursorCurrentUpDownUl = liElements[position.cur].down('ul');
-                self._resetCursorPosition(level + 1);
+//            if (undefined === self._cursorObjectLevelCache[level]) {
+//                self._cursorObjectLevelCache[level] = {};
+//            }
 
-                self._removeClassName(self._cursorCurrentUpDownUl);
+            console.log('LeftRight ', position);
+
+            if ('right' === direction && true === isParent) {
+                //liElements[position.cur].addClassName('over');
+                //self._cursorObjectLevelCache[level][position.cur] = self._cursorUlCurrent;
+
+                self._cursorUlPrevious = Object.clone(self._cursorUlCurrent);
+                self._cursorUlCurrent = liElements[position.cur].down('ul');
+                var firstLiElement = self._cursorUlCurrent.firstDescendant();
+                firstLiElement.addClassName('kpLiBgColor');
+
+                //self._removeClassName(self._cursorUlPrevious);
+            }
+            if ('right' === direction && false === isParent) {
+                self._redirectFromLi(liElements[position.cur]);
+                return true;
+            }
+
+            if ('left' === direction) { // one level up
+                console.log('level up', position);
+                // self._cursorUlPrevious
             }
 
 
-            liElements[position.cur].addClassName('kpLiBgColor');
-            if (position.cur !== position.prev) {
-                liElements[position.prev].removeClassName('over');
-                liElements[position.prev].removeClassName('kpLiBgColor');
-
-            }
-
-//            console.log(position);
+//            liElements[position.cur].addClassName('kpLiBgColor');
+//            if (position.cur !== position.prev) {
+//                liElements[position.prev].removeClassName('over');
+//                liElements[position.prev].removeClassName('kpLiBgColor');
+//            }
+//            if (lastCursorPos.level !== level) {
+//                self._resetCursorPosition(lastCursorPos.level);
+//                //self._removeClassName();
+//            }
 
             return true;
 
+        },
+
+        /**
+         *
+         * @param liElement
+         * @returns void
+         * @private
+         */
+        _redirectFromLi: function (liElement) {
+            var a = liElement.down('a'),
+                href = a.readAttribute('href'),
+                loader = new Element('div', {'class': 'fbLoader'}),
+                i = 1;
+            for (i = 1; i <= 3; i++) {
+                loader.insert({'top': new Element('div', {'class': 'fbBar'})});
+            }
+
+
+            a.insert({'top': loader});
+            console.log(loader);
+            // @todo add: /skin/adminhtml/default/default/images/process_spinner.gif
+            //setLocation(href);
         },
 
         _childIsParent: function (liElement) {
@@ -261,6 +303,7 @@
                 isInit = false,
                 prev = startValue,
                 next = startValue;
+
             if (undefined === self._cursorPosition[level]) {
                 self._cursorPosition[level] = {};
                 self._cursorPosition[level][type] = startValue;
@@ -327,14 +370,14 @@
 
         /**
          *
-         * @param ulElement {object}
+         * @param htmlElement {object}
          * @param className null|string css
          * @returns {NavigationHotKeys}
          * @private
          */
-        _removeClassName: function (ulElement, className) {
+        _removeClassName: function (htmlElement, className) {
             className = className || 'kpLiBgColor';
-            var classElem = ulElement.select('.' + className);
+            var classElem = htmlElement.select('.' + className);
             if (classElem.length > 0) {
                 classElem.forEach(function (element) {
                     element.removeClassName(className);

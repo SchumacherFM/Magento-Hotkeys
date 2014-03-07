@@ -17,3 +17,83 @@ i.kpuline {
     height   : 100%;
     overflow : hidden;
 }
+
+/* <FACEBOOK LOADER> */
+.fbLoader {
+    width  : 32px;
+    height : 24px;
+    float: right;
+}
+
+/* Initial state */
+.fbBar {
+    background-color                  : #99aaca;
+    border                            : 1px solid #96a6c9;
+    float                             : left;
+    margin-right                      : 4px;
+    margin-top                        : 6px;
+    width                             : 6px;
+    height                            : 18px;
+
+    /* Set the animation properties */
+    animation-duration                : 1s;
+    -webkit-animation-duration        : 1s;
+    animation-iteration-count         : infinite;
+    -webkit-animation-iteration-count : infinite;
+    animation-name                    : loadingbar;
+    -webkit-animation-name            : loadingbar;
+}
+
+/* Delay both the second and third bar at the start */
+.fbLoader .fbBar:nth-child(2) {
+    animation-delay         : 0.1s;
+    -webkit-animation-delay : 0.1s;
+}
+
+.fbLoader .fbBar:nth-child(3) {
+    animation-delay : 0.2s;
+    -webkit-animation-delay : 0.2s;
+}
+
+/* The actual animation */
+@-webkit-keyframes loadingbar {
+    0% {
+    }
+    10% {
+        margin-top       : 5px;
+        height           : 22px;
+        border-color     : #d1d8e6;
+        background-color : #bac5db;
+    }
+    20% {
+        margin-top       : 0px;
+        height           : 32px;
+        border-color     : #d1d7e2;
+        background-color : #c6ccda;
+    }
+    30% {
+        margin-top       : 1px;
+        height           : 30px;
+        border-color     : #d1d8e6;
+        background-color : #bac5db;
+    }
+    40% {
+        margin-top : 3px;
+        height     : 26px;
+    }
+    50% {
+        margin-top : 5px;
+        height     : 22px;
+    }
+    60% {
+        margin-top : 6px;
+        height     : 18px;
+    }
+    70% {
+    }
+    /* Missing frames will cause the extra delay */
+    100% {
+    }
+}
+
+/* </FACEBOOK LOADER> */
