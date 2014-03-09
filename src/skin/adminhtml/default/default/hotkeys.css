@@ -32,8 +32,8 @@ i.kpuline {
     float                             : left;
     margin-right                      : 4px;
     margin-top                        : 6px;
-    width                             : 6px;
-    height                            : 18px;
+    width                             : 4px;
+    height                            : 10px;
 
     /* Set the animation properties */
     animation-duration                : 1s;
@@ -61,33 +61,33 @@ i.kpuline {
     }
     10% {
         margin-top       : 5px;
-        height           : 22px;
+        height           : 14px;
         border-color     : #d1d8e6;
         background-color : #bac5db;
     }
     20% {
         margin-top       : 0px;
-        height           : 32px;
+        height           : 24px;
         border-color     : #d1d7e2;
         background-color : #c6ccda;
     }
     30% {
         margin-top       : 1px;
-        height           : 30px;
+        height           : 22px;
         border-color     : #d1d8e6;
         background-color : #bac5db;
     }
     40% {
         margin-top : 3px;
-        height     : 26px;
+        height     : 18px;
     }
     50% {
         margin-top : 5px;
-        height     : 22px;
+        height     : 14px;
     }
     60% {
         margin-top : 6px;
-        height     : 18px;
+        height     : 10px;
     }
     70% {
     }
