@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  /**
  * @category  SchumacherFM
  * @package   SchumacherFM_Hotkeys
@@ -8,23 +7,38 @@
  */
 -->
 <config>
+    <menu>
+        <system>
+            <children>
+                <tools>
+                    <children>
+                        <hotkeys translate="title" module="hotkeys">
+                            <title>Keyboard shortcuts (Global)</title>
+                            <action>adminhtml/hotkeys_routes</action>
+                            <sort_order>100</sort_order>
+                        </hotkeys>
+                    </children>
+                </tools>
+            </children>
+        </system>
+    </menu>
     <acl>
-   		<resources>
-   			<admin>
-   				<children>
-   					<system>
-   						<children>
-   							<config>
-   								<children>
-   									<hotkeys translate="title" module="hotkeys">
-   										<title>Hotkeys</title>
-   									</hotkeys>
-   								</children>
-   							</config>
-   						</children>
-   					</system>
-   				</children>
-   			</admin>
-   		</resources>
-   	</acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <tools>
+                                <children>
+                                    <hotkeys translate="title" module="hotkeys">
+                                        <title>Keyboard shortcuts</title>
+                                    </hotkeys>
+                                </children>
+                            </tools>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
 </config>

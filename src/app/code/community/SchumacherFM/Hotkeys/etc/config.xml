@@ -15,8 +15,27 @@
         <models>
             <hotkeys>
                 <class>SchumacherFM_Hotkeys_Model</class>
+                <resourceModel>hotkeys_resource</resourceModel>
             </hotkeys>
+            <hotkeys_resource>
+                <class>SchumacherFM_Hotkeys_Model_Resource</class>
+                <entities>
+                    <routes>
+                        <table>hk_routes</table>
+                    </routes>
+                    <users>
+                        <table>hk_users</table>
+                    </users>
+                </entities>
+            </hotkeys_resource>
         </models>
+        <resources>
+            <hotkeys_setup>
+                <setup>
+                    <module>SchumacherFM_Hotkeys</module>
+                </setup>
+            </hotkeys_setup>
+        </resources>
         <blocks>
             <hotkeys>
                 <class>SchumacherFM_Hotkeys_Block</class>

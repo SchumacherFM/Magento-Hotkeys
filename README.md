@@ -4,18 +4,10 @@ Magento Hotkeys
 Hotkeys aka key board shortcuts for the Magento backend!
 
 table 1 hk_routes
-ID | admin route |
+ID | admin route | shortcut
 
-table 2 hk_actions
-ID | hk_routes_id | action_name | action_url | action_xpath
-
-xpath for trigger onclick events
-
-table 3 hk_hotkeys
-ID | hk_actions_id | shortcut
-
-table 4 hk_hotkeys_user
-ID | hk_hotkeys_id | user_id | shortcut
+table 4 hk_users
+ID | hk_routes_id | user_id | shortcut
 
 
 Why do I need this?

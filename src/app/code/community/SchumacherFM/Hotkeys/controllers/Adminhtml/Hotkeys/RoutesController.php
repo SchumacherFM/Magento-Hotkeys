@@ -12,7 +12,7 @@
  *
  * Class SchumacherFM_Hotkeys_Adminhtml_HotkeysController
  */
-class SchumacherFM_Hotkeys_Adminhtml_HotkeysController extends Mage_Adminhtml_Controller_Action
+class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Adminhtml_Controller_Action
 {
     /**
      * Init actions
@@ -25,8 +25,8 @@ class SchumacherFM_Hotkeys_Adminhtml_HotkeysController extends Mage_Adminhtml_Co
         $this->loadLayout()
             ->_setActiveMenu('system/tools/hotkeys')
             ->_addBreadcrumb(Mage::helper('cms')->__('System'), Mage::helper('hotkeys')->__('CMS'))
-            ->_addBreadcrumb(Mage::helper('cms')->__('Static Blocks'), Mage::helper('cms')->__('Static Blocks'))
-            ->_addBreadcrumb(Mage::helper('cms')->__('Static Blocks'), Mage::helper('cms')->__('Static Blocks'))
+            ->_addBreadcrumb(Mage::helper('cms')->__('Static Blocks'), Mage::helper('hotkeys')->__('Static Blocks'))
+            ->_addBreadcrumb(Mage::helper('cms')->__('Static Blocks'), Mage::helper('hotkeys')->__('Static Blocks'))
         ;
         return $this;
     }
@@ -35,6 +35,9 @@ class SchumacherFM_Hotkeys_Adminhtml_HotkeysController extends Mage_Adminhtml_Co
      */
     public function indexAction()
     {
+        Zend_Debug::dump($this->getRequest());
+        exit;
+
         $this->_title($this->__('Hotkeys'));
 
         $this->_initAction();
