@@ -16,6 +16,6 @@ class SchumacherFM_Hotkeys_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getKeyMainMenu()
     {
-        return Mage::getStoreConfig('system/hotkeys/key_main_menu');
+        return trim(Mage::getStoreConfig('system/hotkeys/key_main_menu'));
     }
 }

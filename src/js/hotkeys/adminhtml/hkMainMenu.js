@@ -539,11 +539,10 @@
                         return null;
                     }
                     event.preventDefault();
+                    console.log(_keycode_dictionary[key]);
                     if (_keycode_dictionary[key]) {
                         target.value = (true === _isFirst ? '' : target.value + ' ') + _keycode_dictionary[key];
                         _isFirst = false;
-                    } else {
-                        alert('Key is not available!');
                     }
                 });
 
