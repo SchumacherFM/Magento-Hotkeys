@@ -15,8 +15,6 @@
         var self = this;
         self._nav = {};
         self._config = {};
-//        self._assignedKeys = {};
-//        self._previousActiveLiNode = null;
         self._activateMenuSC = 'meta m';
         self._isKeyPressedToActiveMenu = false;
         self._cursorUlCurrent = {}; // left right ul element
@@ -296,8 +294,7 @@
                 isDescending = ('down' === dir || 'left' === dir),
                 startValue = 0,
                 isInit = false,
-                prev = startValue,
-                next = startValue;
+                prev = startValue;
 
             if (undefined === self._cursorPosition[level]) {
                 self._cursorPosition[level] = {};
@@ -309,39 +306,30 @@
                 isInit = true;
             }
             prev = self._cursorPosition[level][type];
-            next = self._cursorPosition[level][type];
 
             if (true === isDescending) {
                 if (false === isInit) {
                     self._cursorPosition[level][type]--;
                 }
-                next = self._cursorPosition[level][type] - 1;
+
             } else {
                 if (false === isInit) {
                     self._cursorPosition[level][type]++;
                 }
-                next = self._cursorPosition[level][type] + 1;
+
             }
 
             self._cursorPosition[level][type] = self._cursorPosition[level][type] < 0
-                ? 0
+                ? maxPosition
                 : self._cursorPosition[level][type];
             self._cursorPosition[level][type] = self._cursorPosition[level][type] > maxPosition
-                ? maxPosition
-                : self._cursorPosition[level][type];
-
-            next = next < 0
                 ? 0
-                : next;
-            next = next > maxPosition
-                ? maxPosition
-                : next;
+                : self._cursorPosition[level][type];
 
             self._cursorLastPosition = {
                 'level': level,
                 'prev': prev,
-                'cur': self._cursorPosition[level][type],
-                'next': next
+                'cur': self._cursorPosition[level][type]
             };
             return self._cursorLastPosition;
         },
