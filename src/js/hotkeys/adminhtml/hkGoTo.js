@@ -38,7 +38,7 @@
                 config = JSON.parse($('hotkeysConfig').readAttribute('data-config') || '{}');
 
             self._nav = $('nav');
-            self._config = {            };
+            self._config = config;
 
             return this;
         },
@@ -47,6 +47,7 @@
             return function NHKinit() {
                 self._initConfig();
                 self._assignCursorNavigation();
+                console.log(self._config);
             };
         }
     };

@@ -8,5 +8,14 @@
  */
 class SchumacherFM_Hotkeys_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const XML_CONFIG_ENABLE = 'catalog/pictureperfect/enable';
+
+    public function isDisabled()
+    {
+        return !Mage::getStoreConfigFlag('system/hotkeys/enable');
+    }
+
+    public function getKeyMainMenu()
+    {
+        return Mage::getStoreConfig('system/hotkeys/key_main_menu');
+    }
 }

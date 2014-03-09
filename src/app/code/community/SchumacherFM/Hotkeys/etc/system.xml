@@ -8,7 +8,7 @@
 -->
 <config>
     <sections>
-        <catalog>
+        <system>
             <show_in_store>1</show_in_store>
             <groups>
                 <hotkeys translate="label">
@@ -29,22 +29,27 @@
                             <show_in_store>1</show_in_store>
                         </enable>
 
-                        <lowercase translate="label" module="hotkeys">
-                            <label>Lowercase image file names</label>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        <key_main_menu translate="label" module="hotkeys">
+                            <label>Key combination to activate the four cursors for the top menu</label>
+                            <frontend_type>text</frontend_type>
                             <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <comment><![CDATA[
+                                Please focus the text field with your cursor and press the combination which you would
+                                like to use. Minimum two keys.
+                                ("meta", "alt", "option", "ctrl", "shift", "cmd") + Alphanumeric key. The word meta
+                                can be used on Win and OSX to map to the WIN or ⌘ key. Default is "meta m".
+                                ]]></comment>
                             <depends>
                                 <enable>1</enable>
                             </depends>
-                        </lowercase>
+                        </key_main_menu>
 
                     </fields>
                 </hotkeys>
             </groups>
-        </catalog>
+        </system>
     </sections>
 </config>

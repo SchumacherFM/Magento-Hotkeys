@@ -13,31 +13,12 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Config extends Mage_Adminhtml_Block_A
      */
     protected function _getConfig()
     {
-        /** @var SchumacherFM_PicturePerfect_Helper_Data $helper */
+        /** @var SchumacherFM_Hotkeys_Helper_Data $helper */
         $helper = Mage::helper('hotkeys');
 
         $config = array(
-
-            'translations' => array()
+            'keyMainMenu' => $helper->getKeyMainMenu()
         );
-
-        $translations = array(
-            'Initializing ...',
-            'Waiting for upload ...',
-            'Product ID:',
-            'An error occurred. Tried to parse JSON response which could not be in JSON format.',
-            'Invalid responseText in JSON',
-            'Something went wrong during upload. Please try again. See console.log.',
-            'An error occurred after uploading. No JSON found ...',
-            'An error occurred. Please see console.log',
-            'An error occurred:',
-            'File format is not supported',
-            '',
-        );
-
-        foreach ($translations as $trans) {
-            $config['translations'][$trans] = $helper->__($trans);
-        }
 
         return Zend_Json_Encoder::encode($config);
     }

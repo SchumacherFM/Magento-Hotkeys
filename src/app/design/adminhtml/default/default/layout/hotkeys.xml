@@ -7,7 +7,8 @@
  */
 -->
 <layout>
-    <default>
+    <!--@see SchumacherFM_Hotkeys_Model_Observer_Adminhtml_LayoutUpdate-->
+    <HOTKEYS_CONFIG>
         <reference name="head">
             <action method="addJs">
                 <script>hotkeys/keypress.js</script>
@@ -30,5 +31,5 @@
             <block type="hotkeys/adminhtml_config" name="hotkeys_adminhtml_config"/>
         </reference>
 
-    </default>
+    </HOTKEYS_CONFIG>
 </layout>

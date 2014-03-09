@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?xml version="1.0"?><!--
  * @category    SchumacherFM
  * @package     SchumacherFM_Hotkeys
  * @copyright   Copyright (c) Cyrill at Schumacher dot fm / @SchumacherFM
@@ -60,22 +59,23 @@
             </modules>
         </translate>
         <events>
-            <!--<adminhtml_widget_container_html_before>-->
-                <!--<observers>-->
-                    <!--<schumacherfm_hotkeys_add_load_gallery>-->
-                        <!--<class>SchumacherFM_Hotkeys_Model_Observer_AdminHtmlWidget</class>-->
-                        <!--<method>insertLoadGalleryButton</method>-->
-                    <!--</schumacherfm_hotkeys_add_load_gallery>-->
-                <!--</observers>-->
-            <!--</adminhtml_widget_container_html_before>-->
+            <controller_action_layout_load_before>
+                <observers>
+                    <markdown_controller_action_layout_load_before>
+                        <class>hotkeys/observer_adminhtml_layoutUpdate</class>
+                        <method>injectHotKeysFiles</method>
+                    </markdown_controller_action_layout_load_before>
+                </observers>
+            </controller_action_layout_load_before>
         </events>
     </adminhtml>
     <default>
-        <hotkeys>
+        <system>
             <hotkeys>
                 <enable>1</enable>
+                <key_main_menu>meta m</key_main_menu>
             </hotkeys>
-        </hotkeys>
+        </system>
     </default>
     <phpunit>
         <suite>
