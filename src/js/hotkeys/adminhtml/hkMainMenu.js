@@ -20,6 +20,7 @@
         self._cursorUlCurrent = {}; // left right ul element
         self._cursorLastParent = {}; // up and down ul element
         self._cursorPosition = {};
+        self._redirectInProgress = false;
         self._cursorLastPosition = {};
         self._cursorObjectLevelCache = {};
         return self;
@@ -28,9 +29,7 @@
     NavigationHotKeys.prototype = {
 
         _resetMenu: function () {
-            var self = this,
-                classElem = [];
-
+            var self = this;
             if (true === self._isKeyPressedToActiveMenu) {
                 self._isKeyPressedToActiveMenu = false;
                 self._cursorPosition = {};
@@ -115,52 +114,69 @@
                         'keys': 'up',
                         'is_exclusive': is_exclusive,
                         'is_counting': is_counting,
-                        'on_keydown': function () {
-                            if (false === self._isKeyPressedToActiveMenu) {
-                                return false;
-                            }
-                            return self._cursorUpDown('down');
-                        },
+                        'on_keydown': self._runKeyEvent,
                         'this': self
                     },
                     {
                         'keys': 'down',
                         'is_exclusive': is_exclusive,
                         'is_counting': is_counting,
-                        'on_keydown': function () {
-                            if (false === self._isKeyPressedToActiveMenu) {
-                                return false;
-                            }
-                            return self._cursorUpDown('up');
-                        },
+                        'on_keydown': self._runKeyEvent,
                         'this': self
                     },
                     {
                         'keys': 'left',
                         'is_exclusive': is_exclusive,
                         'is_counting': is_counting,
-                        'on_keydown': function () {
-                            if (false === self._isKeyPressedToActiveMenu) {
-                                return false;
-                            }
-                            return self._cursorLeftRight('left'); // idea: if level0 switch to up
-                        },
+                        'on_keydown': self._runKeyEvent,
                         'this': self
                     },
                     {
                         'keys': 'right',
                         'is_exclusive': is_exclusive,
                         'is_counting': is_counting,
-                        'on_keydown': function () {
-                            if (false === self._isKeyPressedToActiveMenu) {
-                                return false;
-                            }
-                            return self._cursorLeftRight('right');  // idea: if level0 switch to down
-                        },
+                        'on_keydown': self._runKeyEvent,
                         'this': self
                     }
                 ];
             navListener.register_many(combos);
+        },
+
+        _runKeyEvent: function (event) {
+            var self = this,
+                liElements = [],
+                level = 0,
+                level0GoofyMapper = {
+                    'right': 'down',
+                    'left': 'up',
+                    'down': 'right',
+                    'up': 'left'
+                },
+                direction = event.keyIdentifier.toLowerCase();
+
+            if (false === self._isKeyPressedToActiveMenu) {
+                return false;
+            }
+
+            liElements = self._cursorUlCurrent.childElements();
+            level = self._getLevelFromClassName(liElements[0]);
+
+            /**
+             * why? because the CSS puts level0 in horizontal order and it's natural for humans to use
+             * then the right/left key to navigate. under the hood the ul/li elements are made for up/down
+             * for navigating between li's and left/right switching levels.
+             */
+            if (0 === level) {
+                direction = level0GoofyMapper[direction];
+            }
+
+            //console.log('level', level, direction);
+
+            if ('right' === direction || 'left' === direction) {
+                return self._cursorLeftRight(direction);  // idea: if level0 switch to down
+            }
+
+            return self._cursorUpDown(('up' === direction) ? 'down' : 'up');  // goofy
         },
 
         /**
@@ -177,7 +193,6 @@
                 level = self._getLevelFromClassName(liElements[0]),
                 position = self._getCursorPosition(level, direction, liElements.length - 1),
                 isParent = false;
-
 
             isParent = self._childIsParent(liElements[position.cur]);
 
@@ -264,11 +279,17 @@
                 href = a.readAttribute('href'),
                 loader = new Element('div', {'class': 'fbLoader'}),
                 i = 1;
+
+            if (true === this._redirectInProgress) {
+                return console.warn('Redirect is in progress. Please be patient!');
+            }
+
             for (i = 1; i <= 3; i++) {
                 loader.insert({'top': new Element('div', {'class': 'fbBar'})});
             }
             a.insert({'top': loader});
             setLocation(href);
+            this._redirectInProgress = true;
         },
 
         /**
@@ -307,16 +328,12 @@
             }
             prev = self._cursorPosition[level][type];
 
-            if (true === isDescending) {
-                if (false === isInit) {
-                    self._cursorPosition[level][type]--;
-                }
-
+            if (true === isDescending && false === isInit) {
+                self._cursorPosition[level][type]--;
             } else {
                 if (false === isInit) {
                     self._cursorPosition[level][type]++;
                 }
-
             }
 
             self._cursorPosition[level][type] = self._cursorPosition[level][type] < 0
@@ -334,21 +351,16 @@
             return self._cursorLastPosition;
         },
 
-        _resetCursorPosition: function (level) {
-            var self = this;
-            self._cursorPosition[level] = {};
-            return self;
-        },
-
         /**
          *
          * @param event {*}
          * @private
          */
         _handleEnterEvent: function (event) {
-            var self = this;
-            console.log(event, self._cursorLastPosition);
-
+            var self = this,
+                liElements = self._cursorUlCurrent.childElements();
+            self._redirectFromLi(liElements[self._cursorLastPosition.cur]);
+            return true;
         },
 
         /**
