@@ -10,4 +10,11 @@ class SchumacherFM_Hotkeys_Model_Resource_Routes_Collection extends Mage_Core_Mo
     {
         $this->_init('hotkeys/routes');
     }
+
+    public function setRoutesOrder()
+    {
+        $this->setOrder('route', self::SORT_ORDER_ASC);
+        $this->setOrder('hotkey', self::SORT_ORDER_ASC);
+        return $this;
+    }
 }

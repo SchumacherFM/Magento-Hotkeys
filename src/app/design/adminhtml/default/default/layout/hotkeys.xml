@@ -34,18 +34,17 @@
 
     <adminhtml_hotkeys_routes_index>
         <reference name="content">
-            <block type="adminhtml/hotkeys_routes" name="hotkeys_routes"></block>
+            <block type="hotkeys/adminhtml_hotkeys_routes" name="hotkeys_routes"></block>
         </reference>
     </adminhtml_hotkeys_routes_index>
 
     <adminhtml_hotkeys_routes_new>
-        <update handle="adminhtml_hotkeys_routes_edit"/>
+        <update handle="hotkeys/adminhtml_hotkeys_routes_edit"/>
     </adminhtml_hotkeys_routes_new>
 
     <adminhtml_hotkeys_routes_edit>
-        <update handle="editor"/>
         <reference name="content">
-            <block type="adminhtml/hotkeys_routes_edit" name="hotkeys_routes_edit"></block>
+            <block type="hotkeys/adminhtml_hotkeys_routes_edit" name="hotkeys_routes_edit"></block>
         </reference>
     </adminhtml_hotkeys_routes_edit>
 </layout>

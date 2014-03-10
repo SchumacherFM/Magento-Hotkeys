@@ -24,22 +24,18 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
         // load layout, set active menu and breadcrumbs
         $this->loadLayout()
             ->_setActiveMenu('system/tools/hotkeys')
-            ->_addBreadcrumb(Mage::helper('cms')->__('System'), Mage::helper('hotkeys')->__('CMS'))
-            ->_addBreadcrumb(Mage::helper('cms')->__('Static Blocks'), Mage::helper('hotkeys')->__('Static Blocks'))
-            ->_addBreadcrumb(Mage::helper('cms')->__('Static Blocks'), Mage::helper('hotkeys')->__('Static Blocks'))
-        ;
+            ->_addBreadcrumb(Mage::helper('hotkeys')->__('System'), Mage::helper('hotkeys')->__('System'))
+            ->_addBreadcrumb(Mage::helper('hotkeys')->__('Tools'), Mage::helper('hotkeys')->__('Tools'))
+            ->_addBreadcrumb(Mage::helper('hotkeys')->__('Shortcut Keys'), Mage::helper('hotkeys')->__('Shortcut Keys'));
         return $this;
     }
+
     /**
      * Index action
      */
     public function indexAction()
     {
-        Zend_Debug::dump($this->getRequest());
-        exit;
-
-        $this->_title($this->__('Hotkeys'));
-
+        $this->_title($this->__('Hotkeys (Global)'));
         $this->_initAction();
         $this->renderLayout();
     }
@@ -58,36 +54,38 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
      */
     public function editAction()
     {
-        $this->_title($this->__('CMS'))->_title($this->__('Static Blocks'));
+        $this->_title($this->__('hotkeys'))->_title($this->__('Shortcut Keys'));
 
         // 1. Get ID and create model
-        $id = $this->getRequest()->getParam('block_id');
-        $model = Mage::getModel('cms/block');
+        $id    = (int)$this->getRequest()->getParam('id',0);
+        /** @var SchumacherFM_Hotkeys_Model_Routes $model */
+        $model = Mage::getModel('hotkeys/routes');
 
         // 2. Initial checking
-        if ($id) {
+        if ($id>0) {
             $model->load($id);
-            if (! $model->getId()) {
-                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('cms')->__('This block no longer exists.'));
+            if (!$model->getId()) {
+                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('This shortcut key no longer exists.'));
                 $this->_redirect('*/*/');
                 return;
             }
         }
 
-        $this->_title($model->getId() ? $model->getTitle() : $this->__('New Block'));
+        $this->_title($model->getId() ? $model->getTitle() : $this->__('New Shortcut Key (Global)'));
 
         // 3. Set entered data if was error when we do save
-        $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-        if (! empty($data)) {
+        $data = Mage::getSingleton('adminhtml/session')->getFormData(TRUE);
+        if (!empty($data)) {
             $model->setData($data);
         }
 
         // 4. Register model to use later in blocks
-        Mage::register('cms_block', $model);
+        Mage::register('hotkey_route', $model);
 
         // 5. Build edit form
         $this->_initAction()
-            ->_addBreadcrumb($id ? Mage::helper('cms')->__('Edit Block') : Mage::helper('cms')->__('New Block'), $id ? Mage::helper('cms')->__('Edit Block') : Mage::helper('cms')->__('New Block'))
+            ->_addBreadcrumb($id ? Mage::helper('hotkeys')->__('Edit Shortcut key') : Mage::helper('hotkeys')->__('New Shortcut key'),
+                $id ? Mage::helper('hotkeys')->__('Edit Shortcut key') : Mage::helper('hotkeys')->__('New Shortcut key'))
             ->renderLayout();
     }
 
@@ -98,11 +96,12 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
     {
         // check if data sent
         if ($data = $this->getRequest()->getPost()) {
-
-            $id = $this->getRequest()->getParam('block_id');
+Zend_Debug::dump($data);
+exit;
+            $id    = $this->getRequest()->getParam('id');
             $model = Mage::getModel('cms/block')->load($id);
             if (!$model->getId() && $id) {
-                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('cms')->__('This block no longer exists.'));
+                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('This block no longer exists.'));
                 $this->_redirect('*/*/');
                 return;
             }
@@ -116,9 +115,9 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
                 // save the data
                 $model->save();
                 // display success message
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('cms')->__('The block has been saved.'));
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('hotkeys')->__('The block has been saved.'));
                 // clear previously saved data from session
-                Mage::getSingleton('adminhtml/session')->setFormData(false);
+                Mage::getSingleton('adminhtml/session')->setFormData(FALSE);
 
                 // check if 'Save and Continue'
                 if ($this->getRequest()->getParam('back')) {
@@ -128,7 +127,6 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
                 // go to grid
                 $this->_redirect('*/*/');
                 return;
-
             } catch (Exception $e) {
                 // display error message
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -157,11 +155,10 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
                 $title = $model->getTitle();
                 $model->delete();
                 // display success message
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('cms')->__('The block has been deleted.'));
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('hotkeys')->__('The block has been deleted.'));
                 // go to grid
                 $this->_redirect('*/*/');
                 return;
-
             } catch (Exception $e) {
                 // display error message
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
@@ -171,7 +168,7 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
             }
         }
         // display error message
-        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('cms')->__('Unable to find a block to delete.'));
+        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('Unable to find a block to delete.'));
         // go to grid
         $this->_redirect('*/*/');
     }
