@@ -17,10 +17,11 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Config extends Mage_Adminhtml_Block_A
         $helper = Mage::helper('hotkeys');
 
         $config = array(
-            'keyMainMenu' => $helper->getKeyMainMenu()
+            'keyMainMenu' => $helper->getKeyMainMenu(),
+            'globalKeys'  => $array = Mage::getModel('hotkeys/source_hotkeysRoutes')->getOptions(),
         );
 
-        return Zend_Json_Encoder::encode($config);
+        return json_encode($config);
     }
 
     /**

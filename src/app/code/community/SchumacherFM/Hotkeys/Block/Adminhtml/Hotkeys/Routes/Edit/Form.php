@@ -52,7 +52,7 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Hotkeys_Routes_Edit_Form extends Mage
         $fieldset->addField('existing_keys', 'hidden', array(
             'name' => 'existing_keys'
         ));
-        $model->setData('existing_keys', $this->_getExistingKeysJson($model->getId()));
+        $model->setData('existing_keys', $this->_getExistingKeysJson($model->getHotkey()));
         $form->setValues($model->getData());
         $form->setUseContainer(TRUE);
         $this->setForm($form);
@@ -60,17 +60,17 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Hotkeys_Routes_Edit_Form extends Mage
         return parent::_prepareForm();
     }
 
-    protected function _getExistingKeysJson($excludingId)
+    /**
+     * @param string $excludingHotkey
+     *
+     * @return string
+     */
+    protected function _getExistingKeysJson($excludingHotkey)
     {
-        /** @var SchumacherFM_Hotkeys_Model_Resource_Routes_Collection $collection */
-        $collection = Mage::getModel('hotkeys/routes')->getCollection();
-        $collection->addFieldToFilter('id', array('neq' => (int)$excludingId));
-
-        $return = array();
-        foreach ($collection as $item) {
-            $return[$item->getHotkey()] = TRUE;
+        $array = Mage::getModel('hotkeys/source_hotkeysRoutes')->getOptions();
+        if (isset($array[$excludingHotkey])) {
+            unset($array[$excludingHotkey]);
         }
-
-        return json_encode($return);
+        return json_encode($array);
     }
 }
