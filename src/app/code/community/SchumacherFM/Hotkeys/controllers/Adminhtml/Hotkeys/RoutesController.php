@@ -57,12 +57,12 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
         $this->_title($this->__('hotkeys'))->_title($this->__('Shortcut Keys'));
 
         // 1. Get ID and create model
-        $id    = (int)$this->getRequest()->getParam('id',0);
+        $id = (int)$this->getRequest()->getParam('id', 0);
         /** @var SchumacherFM_Hotkeys_Model_Routes $model */
         $model = Mage::getModel('hotkeys/routes');
 
         // 2. Initial checking
-        if ($id>0) {
+        if ($id > 0) {
             $model->load($id);
             if (!$model->getId()) {
                 Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('This shortcut key no longer exists.'));
@@ -96,32 +96,29 @@ class SchumacherFM_Hotkeys_Adminhtml_Hotkeys_RoutesController extends Mage_Admin
     {
         // check if data sent
         if ($data = $this->getRequest()->getPost()) {
-Zend_Debug::dump($data);
-exit;
-            $id    = $this->getRequest()->getParam('id');
-            $model = Mage::getModel('cms/block')->load($id);
+
+            $id = (int)$this->getRequest()->getParam('id', 0);
+            /** @var SchumacherFM_Hotkeys_Model_Routes $model */
+            $model = Mage::getModel('hotkeys/routes')->load($id);
             if (!$model->getId() && $id) {
-                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('This block no longer exists.'));
+                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('This route/shortcut no longer exists.'));
                 $this->_redirect('*/*/');
                 return;
             }
 
             // init model and set data
-
             $model->setData($data);
 
             // try to save it
             try {
                 // save the data
                 $model->save();
-                // display success message
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('hotkeys')->__('The block has been saved.'));
-                // clear previously saved data from session
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('hotkeys')->__('The route/shortcut has been saved.'));
                 Mage::getSingleton('adminhtml/session')->setFormData(FALSE);
 
                 // check if 'Save and Continue'
                 if ($this->getRequest()->getParam('back')) {
-                    $this->_redirect('*/*/edit', array('block_id' => $model->getId()));
+                    $this->_redirect('*/*/edit', array('id' => (int)$model->getId()));
                     return;
                 }
                 // go to grid
@@ -133,7 +130,7 @@ exit;
                 // save data in session
                 Mage::getSingleton('adminhtml/session')->setFormData($data);
                 // redirect to edit form
-                $this->_redirect('*/*/edit', array('block_id' => $this->getRequest()->getParam('block_id')));
+                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
                 return;
             }
         }
@@ -146,16 +143,14 @@ exit;
     public function deleteAction()
     {
         // check if we know what should be deleted
-        if ($id = $this->getRequest()->getParam('block_id')) {
-            $title = "";
+        $id = (int)$this->getRequest()->getParam('id', 0);
+        if ($id > 0) {
             try {
-                // init model and delete
-                $model = Mage::getModel('cms/block');
-                $model->load($id);
-                $title = $model->getTitle();
+                /** @var SchumacherFM_Hotkeys_Model_Routes $model */
+                $model = Mage::getModel('hotkeys/routes')->load($id);
                 $model->delete();
                 // display success message
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('hotkeys')->__('The block has been deleted.'));
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('hotkeys')->__('The route/shortcut has been deleted.'));
                 // go to grid
                 $this->_redirect('*/*/');
                 return;
@@ -163,12 +158,12 @@ exit;
                 // display error message
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
                 // go back to edit form
-                $this->_redirect('*/*/edit', array('block_id' => $id));
+                $this->_redirect('*/*/edit', array('id' => $id));
                 return;
             }
         }
         // display error message
-        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('Unable to find a block to delete.'));
+        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('hotkeys')->__('Unable to find a route/shortcut to delete.'));
         // go to grid
         $this->_redirect('*/*/');
     }
@@ -180,6 +175,6 @@ exit;
      */
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('cms/block');
+        return Mage::getSingleton('admin/session')->isAllowed('system/tools/hotkeys');
     }
 }

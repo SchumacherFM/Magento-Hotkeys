@@ -14,9 +14,9 @@
                 <script>hotkeys/keypress.js</script>
                 <!--<script>hotkeys/keypress-2.0.1.min.js</script>-->
             </action>
-            <action method="addJs">
-                <script>hotkeys/hkPromise.js</script>
-            </action>
+            <!--<action method="addJs">-->
+            <!--<script>hotkeys/hkPromise.js</script>-->
+            <!--</action>-->
             <action method="addJs">
                 <script>hotkeys/adminhtml/hkMainMenu.js</script>
             </action>
@@ -34,7 +34,7 @@
 
     <adminhtml_hotkeys_routes_index>
         <reference name="content">
-            <block type="hotkeys/adminhtml_hotkeys_routes" name="hotkeys_routes"></block>
+            <block type="hotkeys/adminhtml_hotkeys_routes" name="hotkeys_routes"/>
         </reference>
     </adminhtml_hotkeys_routes_index>
 
@@ -43,8 +43,21 @@
     </adminhtml_hotkeys_routes_new>
 
     <adminhtml_hotkeys_routes_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>hotkeys/adminhtml/hkGlobal.js</script>
+            </action>
+        </reference>
         <reference name="content">
-            <block type="hotkeys/adminhtml_hotkeys_routes_edit" name="hotkeys_routes_edit"></block>
+            <block type="hotkeys/adminhtml_hotkeys_routes_edit" name="hotkeys_routes_edit"/>
         </reference>
     </adminhtml_hotkeys_routes_edit>
+
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addJs">
+                <script>hotkeys/adminhtml/hkGlobal.js</script>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
 </layout>
