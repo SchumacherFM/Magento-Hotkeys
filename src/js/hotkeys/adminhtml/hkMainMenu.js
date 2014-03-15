@@ -5,7 +5,7 @@
  * @author      Cyrill at Schumacher dot fm / @SchumacherFM
  * @copyright   Copyright (c) Please read the EULA
  */
-/*global $,window,$$,varienGlobalEvents,Ajax,Event,Element,jwerty,setLocation*/
+/*global $,window,$$,varienGlobalEvents,Ajax,Event,Element,jwerty,setLocation,Window*/
 ;
 (function () {
     'use strict';
@@ -422,7 +422,128 @@
             }
             return this;
         },
+        /**
+         *
+         * @param cb {function}
+         * @returns {Array}
+         * @private
+         */
+        _iterateGlobalKeys: function (cb) {
+            var self = this,
+                hotKey = '',
+                ret = [],
+                i = 0;
+            for (hotKey in self._config.globalKeys) {
+                if (self._config.globalKeys.hasOwnProperty(hotKey)) {
+                    ret.push(cb.call(self, hotKey, self._config.globalKeys[hotKey], i));
+                    i++;
+                }
+            }
+            return ret;
+        },
+        /**
+         * Global GoTo Keys
+         * @private
+         */
+        _mapGoToKeys: function () {
+            var self = this,
+                urlObject = {},
+                hotKey = '',
+                listener = new window.keypress.Listener(),
+                my_combos = self._iterateGlobalKeys(function (hotKey, urlObject) {
+                    return {
+                        "keys": hotKey,
+                        "is_exclusive": true,
+                        'is_unordered': true,
+                        "on_keydown": self._goTo.bindAsEventListener(self, hotKey, urlObject),
+                        "this": self
+                    };
+                });
+            listener.register_many(my_combos);
+        },
+        _goTo: function (event, hotkey, urlObject) {
+            var self = this,
+                $mask = $('loading-mask'),
+                $loader = $mask.select('.loader')[0],
+                innerContent = $loader.innerHTML.replace(/<br>.+/i, '');
 
+            $loader.update(innerContent + '<br>' + hotkey + '<br>' + urlObject.l);
+            $mask.show();
+            setLocation(self._config.baseUrl + urlObject.r);
+            return false;
+        },
+        _initShortCutKeyHelp: function () {
+            var self = this,
+                $navBar = $('page-help-link'),
+                aElement = new Element('a', {'class': 'shortCutHelp', 'href': '#'});
+            aElement.update('Shortcuts');
+            aElement.observe('click', self._showShortCutKeyHelp.bindAsEventListener(self));
+            $navBar.insert({'after': aElement});
+        },
+        /**
+         *
+         * @param event {object}
+         * @private
+         */
+        _showShortCutKeyHelp: function (event) {
+            event.preventDefault();
+            var self = this,
+                win = new Window({ // http://prototype-window.xilinus.com/documentation.html
+                    className: "magento",
+                    title: self.__("Available Shortcuts"),
+                    width: 500,
+                    height: 300,
+                    draggable: false,
+                    destroyOnClose: true,
+                    recenterAuto: false
+                }),
+                $theWin = $(win.getId());
+            // are you f*** kidding me!?
+            $theWin.setStyle({'position': 'absolute'});
+            $theWin.removeClassName('dialog').addClassName('magento');
+            win.getContent().update(self._getShortCutHelpTable());
+            win.setStatusBar('<a href="' + self._config.manageHotKeys + '">' + self.__('Manage short cuts') + '</a>');
+            win.showCenter();
+        },
+        /**
+         * generates the table where all shortcuts are listed
+         * @returns {string}
+         * @private
+         */
+        _getShortCutHelpTable: function () {
+            var self = this, html = [], table = '', htmlC = 0;
+            html = self._iterateGlobalKeys(function (hotKey, urlObject) {
+                return '<td class="l"><a href="' +
+                    self._config.baseUrl + urlObject.r
+                    + '">' +
+                    urlObject.l + '</a></td><td class="k">' + hotKey + '</td>';
+            });
+
+            if (1 === (html.length % 2)) {
+                html.push('<td class="l"></td><td class="k"></td>');
+            }
+            htmlC = html.length - 1;
+            html.forEach(function (td, i) {
+                var mod = i % 2;
+                if (0 === mod) {
+                    table += '<tr>';
+                }
+                table += td;
+                if (1 === mod || i === htmlC) {
+                    table += '</tr>';
+                }
+            });
+            return '<table class="sch-table">' + table + '</table>';
+        },
+        /**
+         * translations method
+         * @param str
+         * @returns {*}
+         * @private
+         */
+        __: function (str) {
+            return this._config.__[str] || str;
+        },
 //        _handlePreviousActiveLiNode: function (currentKey, liNode) {
 //            if (null !== this._previousActiveLiNode) {
 //                this._previousActiveLiNode.removeClassName('over');
@@ -472,6 +593,8 @@
                 self._initConfig();
                 self._registerMenuShortCut();
                 self._assignCursorNavigation();
+                self._mapGoToKeys();
+                self._initShortCutKeyHelp();
             };
         }
     };

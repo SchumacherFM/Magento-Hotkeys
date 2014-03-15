@@ -4,4 +4,7 @@ src/app/locale/en_US/SchumacherFM_Hotkeys.csv app/locale/en_US/SchumacherFM_Hotk
 src/app/locale/de_DE/SchumacherFM_Hotkeys.csv app/locale/de_DE/SchumacherFM_Hotkeys.csv
 src/js/hotkeys js/hotkeys
 src/app/design/adminhtml/default/default/layout/hotkeys.xml app/design/adminhtml/default/default/layout/hotkeys.xml
+src/app/design/adminhtml/default/default/template/schumacherfm/hotkeys app/design/adminhtml/default/default/template/schumacherfm/hotkeys
 src/skin/adminhtml/default/default/hotkeys.css skin/adminhtml/default/default/hotkeys.css
+src/skin/adminhtml/default/default/hotkeys/window_maximize.png skin/adminhtml/default/default/lib/prototype/windows/themes/magento/
+src/skin/adminhtml/default/default/hotkeys/window_minimize.png skin/adminhtml/default/default/lib/prototype/windows/themes/magento/

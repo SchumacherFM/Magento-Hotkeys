@@ -11,25 +11,22 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Config extends Mage_Adminhtml_Block_A
     /**
      * @return string json encoded
      */
-    protected function _getConfig()
+    public function getConfig()
     {
         /** @var SchumacherFM_Hotkeys_Helper_Data $helper */
         $helper = Mage::helper('hotkeys');
 
         $config = array(
-            'keyMainMenu' => $helper->getKeyMainMenu(),
-            'globalKeys'  => $array = Mage::getModel('hotkeys/source_hotkeysRoutes')->getOptions(),
+            'keyMainMenu'   => $helper->getKeyMainMenu(),
+            'manageHotKeys' => $this->getUrl('adminhtml/hotkeys_routes'),
+            'baseUrl'       => $this->getBaseUrl(),
+            'globalKeys'    => $array = Mage::getModel('hotkeys/source_hotkeysRoutes')->getOptionsWithUrl(),
+            '__'            => array( // @todo refactor
+                'Manage shortcuts'     => $helper->__('Manage shortcuts'),
+                'Available Shortcuts' => $helper->__('Available Shortcuts'),
+            ),
         );
 
         return json_encode($config);
-    }
-
-    /**
-     * @return string
-     */
-    protected function _toHtml()
-    {
-        return '<div style="display:none;" id="hotkeysConfig" data-config=\'' .
-        $this->_getConfig() . '\'></div>';
     }
 }

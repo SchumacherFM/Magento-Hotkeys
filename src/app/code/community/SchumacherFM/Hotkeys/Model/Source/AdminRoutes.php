@@ -8,7 +8,7 @@ class SchumacherFM_Hotkeys_Model_Source_AdminRoutes
      *
      * @var array
      */
-    protected $_options = NULL;
+    protected $_options = null;
 
     protected $_menuArr = array();
 
@@ -21,7 +21,7 @@ class SchumacherFM_Hotkeys_Model_Source_AdminRoutes
      *
      * @return array
      */
-    protected function _buildMenuArray(Varien_Simplexml_Element $parent = NULL, $path = '', $level = 0)
+    protected function _buildMenuArray(Varien_Simplexml_Element $parent = null, $path = '', $level = 0)
     {
         if (is_null($parent)) {
             $parent = Mage::getSingleton('admin/config')->getAdminhtmlConfig()->getNode('menu');
@@ -48,23 +48,23 @@ class SchumacherFM_Hotkeys_Model_Source_AdminRoutes
     }
 
     /**
-     * Retrieve page layout options
+     * @param bool $includeUrlInLabel
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($includeUrlInLabel = true)
     {
-        if ($this->_options === NULL) {
+        if ($this->_options === null) {
             $this->_options = array();
-
             $this->_buildMenuArray();
-
             foreach ($this->_menuArr as $routes) {
-                $this->_options[$routes['url']] = str_replace('adminhtml/', '', $routes['url']) . ' / ' . $routes['label'];
+                $label                          = true === $includeUrlInLabel
+                    ? $routes['url'] . ' / ' . $routes['label']
+                    : $routes['label'];
+                $this->_options[$routes['url']] = str_replace('adminhtml/', '', $label);
             }
             ksort($this->_options);
         }
-
         return $this->_options;
     }
 
@@ -73,7 +73,7 @@ class SchumacherFM_Hotkeys_Model_Source_AdminRoutes
      *
      * @return array
      */
-    public function toOptionArray($withEmpty = FALSE)
+    public function toOptionArray($withEmpty = false)
     {
         $options = array();
         foreach ($this->getOptions() as $value => $label) {

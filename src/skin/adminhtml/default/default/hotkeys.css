@@ -22,7 +22,7 @@ i.kpuline {
 .fbLoader {
     width  : 32px;
     height : 24px;
-    float: right;
+    float  : right;
 }
 
 /* Initial state */
@@ -51,7 +51,7 @@ i.kpuline {
 }
 
 .fbLoader .fbBar:nth-child(3) {
-    animation-delay : 0.2s;
+    animation-delay         : 0.2s;
     -webkit-animation-delay : 0.2s;
 }
 
@@ -97,3 +97,32 @@ i.kpuline {
 }
 
 /* </FACEBOOK LOADER> */
+
+.magento table.table_window {
+    border-collapse : collapse;
+    border-spacing  : 0;
+    width           : 100%;
+    margin          : 0px;
+    padding         : 0px;
+}
+
+.shortCutHelp {
+    line-height  : 26px;
+    padding-left : 20px;
+    color        : #ebebff;
+}
+
+.sch-table {
+    width : 100%;
+}
+
+.sch-table .l {
+    font-weight  : bold;
+    margin-right : 3px;
+}
+
+.sch-table .k {
+    text-transform : uppercase;
+    font-style     : italic;
+
+}

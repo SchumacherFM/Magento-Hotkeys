@@ -8,7 +8,7 @@ class SchumacherFM_Hotkeys_Model_Source_HotkeysRoutes
      *
      * @var array
      */
-    protected $_options = NULL;
+    protected $_options = null;
 
     protected function _initCollection()
     {
@@ -22,13 +22,34 @@ class SchumacherFM_Hotkeys_Model_Source_HotkeysRoutes
     }
 
     /**
+     * @return array
+     */
+    public function getOptionsWithUrl()
+    {
+        $adminRoutes = Mage::getModel('hotkeys/source_adminRoutes')->getOptions(false);
+        /** @var Mage_Adminhtml_Model_Url $urlModel */
+        $urlModel = Mage::getSingleton('adminhtml/url');
+        $baseUrl  = $urlModel->getBaseUrl();
+        $options  = $this->getOptions();
+        $return   = array();
+
+        foreach ($options as $hotkey => $route) {
+            $return[$hotkey] = array(
+                'l' => isset($adminRoutes[$route]) ? $adminRoutes[$route] : $route,
+                'r' => str_replace($baseUrl, '', $urlModel->getUrl($route)),
+            );
+        }
+        return $return;
+    }
+
+    /**
      * Retrieve page layout options
      *
      * @return array
      */
     public function getOptions()
     {
-        if ($this->_options === NULL) {
+        if ($this->_options === null) {
             $this->_initCollection();
         }
         return $this->_options;
@@ -39,7 +60,7 @@ class SchumacherFM_Hotkeys_Model_Source_HotkeysRoutes
      *
      * @return array
      */
-    public function toOptionArray($withEmpty = FALSE)
+    public function toOptionArray($withEmpty = false)
     {
         $options = array();
         foreach ($this->getOptions() as $value => $label) {

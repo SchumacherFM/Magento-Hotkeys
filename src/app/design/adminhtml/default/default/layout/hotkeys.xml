@@ -14,9 +14,6 @@
                 <script>hotkeys/keypress.js</script>
                 <!--<script>hotkeys/keypress-2.0.1.min.js</script>-->
             </action>
-            <!--<action method="addJs">-->
-            <!--<script>hotkeys/hkPromise.js</script>-->
-            <!--</action>-->
             <action method="addJs">
                 <script>hotkeys/adminhtml/hkMainMenu.js</script>
             </action>
@@ -25,10 +22,15 @@
                 <name>hotkeys.css</name>
                 <params/>
             </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>lib/prototype/windows/themes/magento.css</name>
+            </action>
+
         </reference>
 
         <reference name="js">
-            <block type="hotkeys/adminhtml_config" name="hotkeys_adminhtml_config"/>
+            <block type="hotkeys/adminhtml_config" name="hotkeys_adminhtml_config" template="schumacherfm/hotkeys/config.phtml"/>
         </reference>
     </HOTKEYS_CONFIG>
 
@@ -45,7 +47,7 @@
     <adminhtml_hotkeys_routes_edit>
         <reference name="head">
             <action method="addJs">
-                <script>hotkeys/adminhtml/hkGlobal.js</script>
+                <script>hotkeys/adminhtml/hkEdit.js</script>
             </action>
         </reference>
         <reference name="content">
@@ -56,7 +58,7 @@
     <adminhtml_system_config_edit>
         <reference name="head">
             <action method="addJs">
-                <script>hotkeys/adminhtml/hkGlobal.js</script>
+                <script>hotkeys/adminhtml/hkEdit.js</script>
             </action>
         </reference>
     </adminhtml_system_config_edit>
