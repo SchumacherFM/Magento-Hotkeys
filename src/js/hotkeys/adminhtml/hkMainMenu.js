@@ -490,7 +490,7 @@
             var self = this,
                 win = new Window({ // http://prototype-window.xilinus.com/documentation.html
                     className: "magento",
-                    title: self.__("Available Shortcuts"),
+                    title: self.__("Available shortcuts") + ' | <a href="' + self._config.manageHotKeys + '">' + self.__('Edit') + '</a>',
                     width: 500,
                     height: 300,
                     draggable: false,
@@ -500,9 +500,8 @@
                 $theWin = $(win.getId());
             // are you f*** kidding me!?
             $theWin.setStyle({'position': 'absolute'});
-            $theWin.removeClassName('dialog').addClassName('magento');
+            $theWin.addClassName('magento');
             win.getContent().update(self._getShortCutHelpTable());
-            win.setStatusBar('<a href="' + self._config.manageHotKeys + '">' + self.__('Manage short cuts') + '</a>');
             win.showCenter();
         },
         /**
@@ -544,35 +543,6 @@
         __: function (str) {
             return this._config.__[str] || str;
         },
-//        _handlePreviousActiveLiNode: function (currentKey, liNode) {
-//            if (null !== this._previousActiveLiNode) {
-//                this._previousActiveLiNode.removeClassName('over');
-//            }
-//            this._previousActiveLiNode = liNode;
-//        },
-//        _applyCharUnderline: function (label, char, pos) {
-//            var firstPart = label.substr(0, pos),
-//                lastPart = label.substr(pos + 1, label.length);
-//            return firstPart + '<i class="kpuline">' + char + '</i>' + lastPart;
-//        },
-//        _getAvailableKey: function (label, prefix) {
-//            prefix = prefix || '';
-//            var i = 0, len = 0, self = this, orgChar = '', aChar = '', newAssignment = false;
-//            for (i = 0, len = label.length; i < len; i++) {
-//                orgChar = aChar = label.charAt(i);
-//                aChar = aChar.toLowerCase();
-//                if (undefined === self._assignedKeys[prefix + aChar]) {
-//                    newAssignment = true;
-//                    self._assignedKeys[prefix + aChar] = label;
-//                    break;
-//                }
-//            }
-//            return true === newAssignment ? {
-//                'char': orgChar,
-//                'key': prefix + aChar,
-//                'pos': i
-//            } : false;
-//        },
         /**
          * loads on dom:ready
          *

@@ -10,8 +10,8 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Hotkeys_Routes_Edit extends Mage_Admi
 
         parent::__construct();
 
-        $this->_updateButton('save', 'label', Mage::helper('hotkeys')->__('Save Shortcut Key'));
-        $this->_updateButton('delete', 'label', Mage::helper('hotkeys')->__('Delete Shortcut Key'));
+        $this->_updateButton('save', 'label', Mage::helper('hotkeys')->__('Save shortcut'));
+        $this->_updateButton('delete', 'label', Mage::helper('hotkeys')->__('Delete shortcut'));
     }
 
     /**
@@ -22,10 +22,10 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Hotkeys_Routes_Edit extends Mage_Admi
     public function getHeaderText()
     {
         if (Mage::registry('hotkey_route')->getId()) {
-            return Mage::helper('hotkeys')->__("Edit Shortcut Key '%s'",
+            return Mage::helper('hotkeys')->__("Edit shortcut '%s'",
                 $this->escapeHtml(Mage::registry('hotkey_route')->getRoute()));
         } else {
-            return Mage::helper('hotkeys')->__('New Shortcut Key');
+            return Mage::helper('hotkeys')->__('New shortcut');
         }
     }
 

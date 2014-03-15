@@ -2,7 +2,6 @@
 
 class SchumacherFM_Hotkeys_Model_Source_AdminRoutes
 {
-
     /**
      * Page layout options
      *
@@ -57,9 +56,19 @@ class SchumacherFM_Hotkeys_Model_Source_AdminRoutes
         if ($this->_options === null) {
             $this->_options = array();
             $this->_buildMenuArray();
+
+            $longestUrlLength = 0;
+            foreach ($this->_menuArr as $routes) {
+                $urlLength = strlen($routes['url']);
+                if ($urlLength > $longestUrlLength) {
+                    $longestUrlLength = $urlLength;
+                }
+            }
+            $longestUrlLength += 2;
+
             foreach ($this->_menuArr as $routes) {
                 $label                          = true === $includeUrlInLabel
-                    ? $routes['url'] . ' / ' . $routes['label']
+                    ? str_pad(trim($routes['url'], '/'), $longestUrlLength, '_', STR_PAD_RIGHT) . $routes['label']
                     : $routes['label'];
                 $this->_options[$routes['url']] = str_replace('adminhtml/', '', $label);
             }

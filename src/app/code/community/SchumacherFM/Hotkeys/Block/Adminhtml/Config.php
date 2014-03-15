@@ -22,7 +22,7 @@ class SchumacherFM_Hotkeys_Block_Adminhtml_Config extends Mage_Adminhtml_Block_A
             'baseUrl'       => $this->getBaseUrl(),
             'globalKeys'    => $array = Mage::getModel('hotkeys/source_hotkeysRoutes')->getOptionsWithUrl(),
             '__'            => array( // @todo refactor
-                'Manage shortcuts'     => $helper->__('Manage shortcuts'),
+                'Edit'     => $helper->__('Edit'),
                 'Available Shortcuts' => $helper->__('Available Shortcuts'),
             ),
         );
