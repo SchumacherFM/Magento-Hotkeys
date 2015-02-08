@@ -11,8 +11,8 @@
     <HOTKEYS_CONFIG>
         <reference name="head">
             <action method="addJs">
-                <script>hotkeys/keypress.js</script>
-                <!--<script>hotkeys/keypress-2.0.1.min.js</script>-->
+                <!--<script>hotkeys/keypress.js</script>-->
+                <script>hotkeys/keypress-2.1.0.min.js</script>
             </action>
             <action method="addJs">
                 <script>hotkeys/adminhtml/hkMainMenu.js</script>
