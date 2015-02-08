@@ -36,8 +36,8 @@ To configurate a short cut for a specific action please navigate to `System -> T
 Todo
 ----
 
-- Point 1
-- Point 2
+- Keys can be configured on a per user basis (table already exists).
+- Fix minor bugs in Menu when navigating ...
 
 Installation Instructions
 -------------------------
