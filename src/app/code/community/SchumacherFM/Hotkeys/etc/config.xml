@@ -80,10 +80,10 @@
         <events>
             <controller_action_layout_load_before>
                 <observers>
-                    <markdown_controller_action_layout_load_before>
+                    <hot_keys_inject_files>
                         <class>hotkeys/observer_adminhtml_layoutUpdate</class>
                         <method>injectHotKeysFiles</method>
-                    </markdown_controller_action_layout_load_before>
+                    </hot_keys_inject_files>
                 </observers>
             </controller_action_layout_load_before>
         </events>
