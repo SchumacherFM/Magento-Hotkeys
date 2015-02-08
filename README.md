@@ -3,6 +3,7 @@ Magento 1.x Hotkeys
 
 Hotkeys also known as Key Board Shortcuts for the Magento backend!
 
+![Animation](https://raw.githubusercontent.com/SchumacherFM/Magento-Hotkeys/master/ppAction.gif "Animation")
 
 
 Why do I need this?
