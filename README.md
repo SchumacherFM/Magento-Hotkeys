@@ -1,13 +1,8 @@
-Magento Hotkeys
+Magento 1.x Hotkeys
 ===============
 
-Hotkeys aka key board shortcuts for the Magento backend!
+Hotkeys also known as Key Board Shortcuts for the Magento backend!
 
-table 1 hk_routes
-ID | admin route | shortcut
-
-table 4 hk_users
-ID | hk_routes_id | user_id | shortcut
 
 
 Why do I need this?
@@ -15,10 +10,9 @@ Why do I need this?
 
 Because you are tired of using the mouse and want to work faster!
 
-Compatibility
+Compatibile Browsers
 -------------
 
-@todo
 
 | Browser | Minimum Version |
 | --------|-----------------|
@@ -32,9 +26,11 @@ Compatibility
 Configuration
 -------------
 
+Navigate to `System -> Configuration -> System -> KeyBoard Shortcuts`.
+
 All options can be set per store view.
 
-PHP needs shell_exec function if you want to use the split file upload possibility.
+To configurate a short cut for a specific action please navigate to `System -> Tools -> Keyboard Shortcuts`. For each route in your backend you can configure a keyboard shortcut. Routes will be collected automatically.
 
 Todo
 ----
@@ -44,10 +40,11 @@ Todo
 
 Installation Instructions
 -------------------------
+
 1. Install modman from https://github.com/colinmollenhour/modman
 2. Switch to Magento root folder
 3. `modman init`
-4. `modman clone git://github.com/SchumacherFM/Magento-PicturePerfect.git`
+4. `modman clone git@github.com:SchumacherFM/Magento-Hotkeys.git`
 
 Composer based installation:  Please read the great article from
 Vinai [Composer installation](http://magebase.com/magento-tutorials/composer-with-magento/)
@@ -98,7 +95,7 @@ All rights reserved.
 Author
 ------
 
-[Cyrill Schumacher](https://github.com/SchumacherFM)
+[Cyrill Schumacher](http://cyrillschumacher.com)
 
 [My pgp public key](http://www.schumacher.fm/cyrill.asc)
 
