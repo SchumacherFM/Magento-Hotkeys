@@ -74,6 +74,11 @@ Compatibility
 
 There is the possibility that this extension may work with pre-1.5 Magento versions.
 
+Alternatives
+---------
+
+[https://github.com/astorm/PulsestormLauncher](https://github.com/astorm/PulsestormLauncher) 
+
 Support / Contribution
 ----------------------
 
